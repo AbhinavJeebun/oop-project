@@ -18,11 +18,11 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		switch (Gamestate.state) {
-			case PLAYING:
-				gamePanel.getGame().getPlaying().mouseDragged(e);
-				break;
-			default:
-				break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mouseDragged(e);
+			break;
+		default:
+			break;
 
 		}
 
@@ -31,14 +31,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		switch (Gamestate.state) {
-			case MENU:
-				gamePanel.getGame().getMenu().mouseMoved(e);
-				break;
-			case PLAYING:
-				gamePanel.getGame().getPlaying().mouseMoved(e);
-				break;
-			default:
-				break;
+		case MENU:
+			gamePanel.getGame().getMenu().mouseMoved(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mouseMoved(e);
+			break;
+		default:
+			break;
 
 		}
 
@@ -47,11 +47,11 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		switch (Gamestate.state) {
-			case PLAYING:
-				gamePanel.getGame().getPlaying().mouseClicked(e);
-				break;
-			default:
-				break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mouseClicked(e);
+			break;
+		default:
+			break;
 
 		}
 
@@ -60,14 +60,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		switch (Gamestate.state) {
-			case MENU:
-				gamePanel.getGame().getMenu().mousePressed(e);
-				break;
-			case PLAYING:
-				gamePanel.getGame().getPlaying().mousePressed(e);
-				break;
-			default:
-				break;
+		case MENU:
+			gamePanel.getGame().getMenu().mousePressed(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mousePressed(e);
+			break;
+		default:
+			break;
 
 		}
 
@@ -76,14 +76,14 @@ public class MouseInputs implements MouseListener, MouseMotionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		switch (Gamestate.state) {
-			case MENU:
-				gamePanel.getGame().getMenu().mouseReleased(e);
-				break;
-			case PLAYING:
-				gamePanel.getGame().getPlaying().mouseReleased(e);
-				break;
-			default:
-				break;
+		case MENU:
+			gamePanel.getGame().getMenu().mouseReleased(e);
+			break;
+		case PLAYING:
+			gamePanel.getGame().getPlaying().mouseReleased(e);
+			break;
+		default:
+			break;
 
 		}
 
