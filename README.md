@@ -16,6 +16,6 @@ The game is an RPG platformer game where the player has a quest of 5 levels to f
 
 #Done By:
 
-Bhuwanee Hemandr Singh (2117821)
-Jeebun Abhinav (2114198)
-Dhruv Kumar Sharma Punchcoory (2116038)
+* Bhuwanee Hemandr Singh (2117821)
+* Jeebun Abhinav (2114198)
+* Dhruv Kumar Sharma Punchcoory (2116038)
