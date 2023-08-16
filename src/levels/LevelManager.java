@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import main.Game;
 import utilz.LoadSave;
 
+// Manages game levels, their loading, and rendering.
 public class LevelManager {
 
 	private Game game;
@@ -15,6 +16,7 @@ public class LevelManager {
 	private ArrayList<Level> levels;
 	private int lvlIndex = 0, aniTick, aniIndex;
 
+	// Constructor to initialize the LevelManager.
 	public LevelManager(Game game) {
 		this.game = game;
 		importOutsideSprites();
@@ -23,6 +25,7 @@ public class LevelManager {
 		buildAllLevels();
 	}
 
+	// Create water sprites from image.
 	private void createWater() {
 		waterSprite = new BufferedImage[5];
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.WATER_TOP);
@@ -31,6 +34,7 @@ public class LevelManager {
 		waterSprite[4] = LoadSave.GetSpriteAtlas(LoadSave.WATER_BOTTOM);
 	}
 
+	// Load the next level and update game elements accordingly.
 	public void loadNextLevel() {
 		Level newLevel = levels.get(lvlIndex);
 		game.getPlaying().getEnemyManager().loadEnemies(newLevel);
@@ -39,12 +43,14 @@ public class LevelManager {
 		game.getPlaying().getObjectManager().loadObjects(newLevel);
 	}
 
+	// Build all levels from loaded images.
 	private void buildAllLevels() {
 		BufferedImage[] allLevels = LoadSave.GetAllLevels();
 		for (BufferedImage img : allLevels)
 			levels.add(new Level(img));
 	}
 
+	// Import level sprites from an atlas.
 	private void importOutsideSprites() {
 		BufferedImage img = LoadSave.GetSpriteAtlas(LoadSave.LEVEL_ATLAS);
 		levelSprite = new BufferedImage[48];
@@ -55,6 +61,7 @@ public class LevelManager {
 			}
 	}
 
+	// Draw the level tiles and water animation.
 	public void draw(Graphics g, int lvlOffset) {
 		for (int j = 0; j < Game.TILES_IN_HEIGHT; j++)
 			for (int i = 0; i < levels.get(lvlIndex).getLevelData()[0].length; i++) {
@@ -70,10 +77,12 @@ public class LevelManager {
 			}
 	}
 
+	// Update water animation.
 	public void update() {
 		updateWaterAnimation();
 	}
 
+	// Update water animation index.
 	private void updateWaterAnimation() {
 		aniTick++;
 		if (aniTick >= 40) {
@@ -85,18 +94,22 @@ public class LevelManager {
 		}
 	}
 
+	// Get the current level.
 	public Level getCurrentLevel() {
 		return levels.get(lvlIndex);
 	}
 
+	// Get the total number of levels.
 	public int getAmountOfLevels() {
 		return levels.size();
 	}
 
+	// Get the index of the current level.
 	public int getLevelIndex() {
 		return lvlIndex;
 	}
 
+	// Set the index of the current level.
 	public void setLevelIndex(int lvlIndex) {
 		this.lvlIndex = lvlIndex;
 	}
