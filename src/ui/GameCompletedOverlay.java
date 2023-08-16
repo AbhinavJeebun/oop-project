@@ -11,73 +11,80 @@ import main.Game;
 import utilz.LoadSave;
 
 public class GameCompletedOverlay {
-	private Playing playing;
-	private BufferedImage img;
-	private MenuButton quit, credit;
-	private int imgX, imgY, imgW, imgH;
 
-	public GameCompletedOverlay(Playing playing) {
-		this.playing = playing;
-		createImg();
-		createButtons();
-	}
+    private Playing playing;
+    private BufferedImage img;
+    private MenuButton quit, credit;
+    private int imgX, imgY, imgW, imgH;
 
-	private void createButtons() {
-		quit = new MenuButton(Game.GAME_WIDTH / 2, (int) (270 * Game.SCALE), 2, Gamestate.MENU);
-	}
+    public GameCompletedOverlay(Playing playing) {
+        this.playing = playing;
+        createImg();
+        createButtons();
+    }
 
-	private void createImg() {
-		img = LoadSave.GetSpriteAtlas(LoadSave.GAME_COMPLETED);
-		imgW = (int) (img.getWidth() * Game.SCALE);
-		imgH = (int) (img.getHeight() * Game.SCALE);
-		imgX = Game.GAME_WIDTH / 2 - imgW / 2;
-		imgY = (int) (100 * Game.SCALE);
+    // Create quit button and load the game completed image
+    private void createButtons() {
+        quit = new MenuButton(Game.GAME_WIDTH / 2, (int) (270 * Game.SCALE), 2, Gamestate.MENU);
+    }
 
-	}
+    // Load the game completed image
+    private void createImg() {
+        img = LoadSave.GetSpriteAtlas(LoadSave.GAME_COMPLETED);
+        imgW = (int) (img.getWidth() * Game.SCALE);
+        imgH = (int) (img.getHeight() * Game.SCALE);
+        imgX = Game.GAME_WIDTH / 2 - imgW / 2;
+        imgY = (int) (100 * Game.SCALE);
+    }
 
-	public void draw(Graphics g) {
-		g.setColor(new Color(0, 0, 0, 200));
-		g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+    // Draw the game completed overlay
+    public void draw(Graphics g) {
+        g.setColor(new Color(0, 0, 0, 200));
+        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 
-		g.drawImage(img, imgX, imgY, imgW, imgH, null);
+        g.drawImage(img, imgX, imgY, imgW, imgH, null);
 
-		credit.draw(g);
-		quit.draw(g);
-	}
+        credit.draw(g);
+        quit.draw(g);
+    }
 
-	public void update() {
-		credit.update();
-		quit.update();
-	}
+    // Update the buttons
+    public void update() {
+        credit.update();
+        quit.update();
+    }
 
-	private boolean isIn(MenuButton b, MouseEvent e) {
-		return b.getBounds().contains(e.getX(), e.getY());
-	}
+    // Check if a point is within a MenuButton's bounds
+    private boolean isIn(MenuButton b, MouseEvent e) {
+        return b.getBounds().contains(e.getX(), e.getY());
+    }
 
-	public void mouseMoved(MouseEvent e) {
-		quit.setMouseOver(false);
+    // Handle mouse movement event
+    public void mouseMoved(MouseEvent e) {
+        quit.setMouseOver(false);
 
-		if (isIn(quit, e))
-			quit.setMouseOver(true);
-	}
+        if (isIn(quit, e))
+            quit.setMouseOver(true);
+    }
 
-	public void mouseReleased(MouseEvent e) {
-		if (isIn(quit, e)) {
-			if (quit.isMousePressed()) {
-				playing.resetAll();
-				playing.resetGameCompleted();
-				playing.setGamestate(Gamestate.MENU);
+    // Handle mouse release event
+    public void mouseReleased(MouseEvent e) {
+        if (isIn(quit, e)) {
+            if (quit.isMousePressed()) {
+                playing.resetAll();
+                playing.resetGameCompleted();
+                playing.setGamestate(Gamestate.MENU);
+            }
+        }
 
-			}
-		}
+        quit.resetBools();
+    }
 
-		quit.resetBools();
-	}
-
-	public void mousePressed(MouseEvent e) {
-		if (isIn(quit, e))
-			quit.setMousePressed(true);
-		else if (isIn(credit, e))
-			credit.setMousePressed(true);
-	}
+    // Handle mouse press event
+    public void mousePressed(MouseEvent e) {
+        if (isIn(quit, e))
+            quit.setMousePressed(true);
+        else if (isIn(credit, e))
+            credit.setMousePressed(true);
+    }
 }
