@@ -10,7 +10,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public class LoadSave {
-
+// Constants for various image filenames
 	public static final String PLAYER_ATLAS = "player_sprites.png";
 	public static final String LEVEL_ATLAS = "outside_sprites.png";
 	public static final String MENU_BUTTONS = "button_atlas.png";
@@ -45,7 +45,7 @@ public class LoadSave {
 	public static final String WATER_TOP = "water_atlas_animation.png";
 	public static final String WATER_BOTTOM = "water.png";
 	public static final String SHIP = "ship.png";
-
+// Function to get a single sprite atlas from the resources folder
 	public static BufferedImage GetSpriteAtlas(String fileName) {
 		BufferedImage img = null;
 		InputStream is = LoadSave.class.getResourceAsStream("/" + fileName);
@@ -63,7 +63,7 @@ public class LoadSave {
 		}
 		return img;
 	}
-
+// Function to retrieve all level images from a directory
 	public static BufferedImage[] GetAllLevels() {
 		URL url = LoadSave.class.getResource("/lvls");
 		File file = null;
