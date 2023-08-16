@@ -14,6 +14,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class AudioPlayer {
 
+	// Song and effect identifiers
 	public static int MENU_1 = 0;
 	public static int LEVEL_1 = 1;
 	public static int LEVEL_2 = 2;
@@ -26,18 +27,29 @@ public class AudioPlayer {
 	public static int ATTACK_TWO = 5;
 	public static int ATTACK_THREE = 6;
 
+	// Arrays to store song and effect clips
 	private Clip[] songs, effects;
+
+	// Identifier for the currently playing song
 	private int currentSongId;
+
+	// Volume control
 	private float volume = 0.5f;
+
+	// Mute settings for songs and effects
 	private boolean songMute, effectMute;
+
+	// Random number generator
 	private Random rand = new Random();
 
+	// Constructor
 	public AudioPlayer() {
 		loadSongs();
 		loadEffects();
 		playSong(MENU_1);
 	}
 
+	// Load song clips
 	private void loadSongs() {
 		String[] names = { "menu", "level1", "level2" };
 		songs = new Clip[names.length];
@@ -45,6 +57,7 @@ public class AudioPlayer {
 			songs[i] = getClip(names[i]);
 	}
 
+	// Load effect clips
 	private void loadEffects() {
 		String[] effectNames = { "die", "jump", "gameover", "lvlcompleted", "attack1", "attack2", "attack3" };
 		effects = new Clip[effectNames.length];
@@ -52,9 +65,9 @@ public class AudioPlayer {
 			effects[i] = getClip(effectNames[i]);
 
 		updateEffectsVolume();
-
 	}
 
+	// Load an audio clip from a resource
 	private Clip getClip(String name) {
 		URL url = getClass().getResource("/audio/" + name + ".wav");
 		AudioInputStream audio;
@@ -66,25 +79,26 @@ public class AudioPlayer {
 			return c;
 
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-
 			e.printStackTrace();
 		}
 
 		return null;
-
 	}
 
+	// Set the overall volume
 	public void setVolume(float volume) {
 		this.volume = volume;
 		updateSongVolume();
 		updateEffectsVolume();
 	}
 
+	// Stop the currently playing song
 	public void stopSong() {
 		if (songs[currentSongId].isActive())
 			songs[currentSongId].stop();
 	}
 
+	// Set the appropriate level song based on the level index
 	public void setLevelSong(int lvlIndex) {
 		if (lvlIndex % 2 == 0)
 			playSong(LEVEL_1);
@@ -92,23 +106,27 @@ public class AudioPlayer {
 			playSong(LEVEL_2);
 	}
 
+	// Play the level completed effect
 	public void lvlCompleted() {
 		stopSong();
 		playEffect(LVL_COMPLETED);
 	}
 
+	// Play a random attack sound effect
 	public void playAttackSound() {
 		int start = 4;
 		start += rand.nextInt(3);
 		playEffect(start);
 	}
 
+	// Play the specified effect
 	public void playEffect(int effect) {
 		if (effects[effect].getMicrosecondPosition() > 0)
 			effects[effect].setMicrosecondPosition(0);
 		effects[effect].start();
 	}
 
+	// Play the specified song
 	public void playSong(int song) {
 		stopSong();
 
@@ -118,6 +136,7 @@ public class AudioPlayer {
 		songs[currentSongId].loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
+	// Toggle song mute settings
 	public void toggleSongMute() {
 		this.songMute = !songMute;
 		for (Clip c : songs) {
@@ -126,6 +145,7 @@ public class AudioPlayer {
 		}
 	}
 
+	// Toggle effect mute settings
 	public void toggleEffectMute() {
 		this.effectMute = !effectMute;
 		for (Clip c : effects) {
@@ -136,15 +156,15 @@ public class AudioPlayer {
 			playEffect(JUMP);
 	}
 
+	// Update song volume based on the current volume setting
 	private void updateSongVolume() {
-
 		FloatControl gainControl = (FloatControl) songs[currentSongId].getControl(FloatControl.Type.MASTER_GAIN);
 		float range = gainControl.getMaximum() - gainControl.getMinimum();
 		float gain = (range * volume) + gainControl.getMinimum();
 		gainControl.setValue(gain);
-
 	}
 
+	// Update effects volume based on the current volume setting
 	private void updateEffectsVolume() {
 		for (Clip c : effects) {
 			FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
@@ -153,5 +173,4 @@ public class AudioPlayer {
 			gainControl.setValue(gain);
 		}
 	}
-
 }
