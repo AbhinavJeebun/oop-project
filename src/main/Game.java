@@ -3,7 +3,6 @@ package main;
 import java.awt.Graphics;
 
 import audio.AudioPlayer;
-import gamestates.Credits;
 import gamestates.GameOptions;
 import gamestates.Gamestate;
 import gamestates.Menu;
