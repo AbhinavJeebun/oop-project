@@ -2,24 +2,27 @@ package objects;
 
 public class Grass {
 
-	private int x, y, type;
+    private int x, y, type;  // Position and type of the grass.
 
-	public Grass(int x, int y, int type) {
-		this.x = x;
-		this.y = y;
-		this.type = type;
-	}
+    // Constructor for the Grass object.
+    public Grass(int x, int y, int type) {
+        this.x = x;
+        this.y = y;
+        this.type = type;
+    }
 
-	public int getX() {
-		return x;
-	}
+    // Getter method for the x-coordinate.
+    public int getX() {
+        return x;
+    }
 
-	public int getY() {
-		return y;
+    // Getter method for the y-coordinate.
+    public int getY() {
+        return y;
+    }
 
-	}
-
-	public int getType() {
-		return type;
-	}
+    // Getter method for the type of grass.
+    public int getType() {
+        return type;
+    }
 }
