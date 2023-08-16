@@ -6,7 +6,7 @@ import main.Game;
 import objects.Projectile;
 
 public class HelpMethods {
-
+     // Check if an entity can move to a given position based on level data
 	public static boolean CanMoveHere(float x, float y, float width, float height, int[][] lvlData) {
 		if (!IsSolid(x, y, lvlData))
 			if (!IsSolid(x + width, y + height, lvlData))
@@ -15,8 +15,9 @@ public class HelpMethods {
 						return true;
 		return false;
 	}
-
+// Check if a specific coordinate is solid in level data
 	private static boolean IsSolid(float x, float y, int[][] lvlData) {
+		// Check if out of bounds
 		int maxWidth = lvlData[0].length * Game.TILES_SIZE;
 		if (x < 0 || x >= maxWidth)
 			return true;
