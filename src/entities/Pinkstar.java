@@ -10,21 +10,25 @@ import gamestates.Playing;
 
 public class Pinkstar extends Enemy {
 
+	// Control variables for Pinkstar's behavior
 	private boolean preRoll = true;
 	private int tickSinceLastDmgToPlayer;
 	private int tickAfterRollInIdle;
 	private int rollDurationTick, rollDuration = 300;
 
+	// Constructor to initialize Pinkstar's position and dimensions
 	public Pinkstar(float x, float y) {
 		super(x, y, PINKSTAR_WIDTH, PINKSTAR_HEIGHT, PINKSTAR);
 		initHitbox(17, 21);
 	}
 
+	// Update Pinkstar's behavior and animation
 	public void update(int[][] lvlData, Playing playing) {
 		updateBehavior(lvlData, playing);
 		updateAnimationTick();
 	}
 
+	// Update Pinkstar's specific behavior
 	private void updateBehavior(int[][] lvlData, Playing playing) {
 		if (firstUpdate)
 			firstUpdateCheck(lvlData);
@@ -73,6 +77,7 @@ public class Pinkstar extends Enemy {
 		}
 	}
 
+	// Check for damage to the player
 	private void checkDmgToPlayer(Player player) {
 		if (hitbox.intersects(player.getHitbox()))
 			if (tickSinceLastDmgToPlayer >= 60) {
@@ -82,6 +87,7 @@ public class Pinkstar extends Enemy {
 				tickSinceLastDmgToPlayer++;
 	}
 
+	// Set Pinkstar's walking direction based on the player's position
 	private void setWalkDir(Player player) {
 		if (player.getHitbox().x > hitbox.x)
 			walkDir = RIGHT;
@@ -90,6 +96,7 @@ public class Pinkstar extends Enemy {
 
 	}
 
+	// Move Pinkstar and handle rolling behavior
 	protected void move(int[][] lvlData, Playing playing) {
 		float xSpeed = 0;
 
@@ -116,6 +123,7 @@ public class Pinkstar extends Enemy {
 
 	}
 
+	// Check if Pinkstar should roll over and reset roll duration
 	private void checkRollOver(Playing playing) {
 		rollDurationTick++;
 		if (rollDurationTick >= rollDuration) {
@@ -124,9 +132,11 @@ public class Pinkstar extends Enemy {
 		}
 	}
 
+	// Perform the roll-over behavior and trigger a dialogue
 	private void rollOver(Playing playing) {
 		newState(IDLE);
 		playing.addDialogue((int) hitbox.x, (int) hitbox.y, QUESTION);
 	}
+
 
 }

@@ -14,85 +14,91 @@ import utilz.LoadSave;
 
 public class GameOverOverlay {
 
-	private Playing playing;
-	private BufferedImage img;
-	private int imgX, imgY, imgW, imgH;
-	private UrmButton menu, play;
+    private Playing playing;
+    private BufferedImage img;
+    private int imgX, imgY, imgW, imgH;
+    private UrmButton menu, play;
 
-	public GameOverOverlay(Playing playing) {
-		this.playing = playing;
-		createImg();
-		createButtons();
-	}
+    public GameOverOverlay(Playing playing) {
+        this.playing = playing;
+        createImg();
+        createButtons();
+    }
 
-	private void createButtons() {
-		int menuX = (int) (335 * Game.SCALE);
-		int playX = (int) (440 * Game.SCALE);
-		int y = (int) (195 * Game.SCALE);
-		play = new UrmButton(playX, y, URM_SIZE, URM_SIZE, 0);
-		menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
+    // Create menu and play buttons
+    private void createButtons() {
+        int menuX = (int) (335 * Game.SCALE);
+        int playX = (int) (440 * Game.SCALE);
+        int y = (int) (195 * Game.SCALE);
+        play = new UrmButton(playX, y, URM_SIZE, URM_SIZE, 0);
+        menu = new UrmButton(menuX, y, URM_SIZE, URM_SIZE, 2);
+    }
 
-	}
+    // Load the game over image
+    private void createImg() {
+        img = LoadSave.GetSpriteAtlas(LoadSave.DEATH_SCREEN);
+        imgW = (int) (img.getWidth() * Game.SCALE);
+        imgH = (int) (img.getHeight() * Game.SCALE);
+        imgX = Game.GAME_WIDTH / 2 - imgW / 2;
+        imgY = (int) (100 * Game.SCALE);
+    }
 
-	private void createImg() {
-		img = LoadSave.GetSpriteAtlas(LoadSave.DEATH_SCREEN);
-		imgW = (int) (img.getWidth() * Game.SCALE);
-		imgH = (int) (img.getHeight() * Game.SCALE);
-		imgX = Game.GAME_WIDTH / 2 - imgW / 2;
-		imgY = (int) (100 * Game.SCALE);
+    // Draw the game over overlay
+    public void draw(Graphics g) {
+        g.setColor(new Color(0, 0, 0, 200));
+        g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
 
-	}
+        g.drawImage(img, imgX, imgY, imgW, imgH, null);
 
-	public void draw(Graphics g) {
-		g.setColor(new Color(0, 0, 0, 200));
-		g.fillRect(0, 0, Game.GAME_WIDTH, Game.GAME_HEIGHT);
+        menu.draw(g);
+        play.draw(g);
+    }
 
-		g.drawImage(img, imgX, imgY, imgW, imgH, null);
+    // Update the buttons
+    public void update() {
+        menu.update();
+        play.update();
+    }
 
-		menu.draw(g);
-		play.draw(g);
-	}
+    // Check if a point is within a UrmButton's bounds
+    private boolean isIn(UrmButton b, MouseEvent e) {
+        return b.getBounds().contains(e.getX(), e.getY());
+    }
 
-	public void update() {
-		menu.update();
-		play.update();
-	}
+    // Handle mouse movement event
+    public void mouseMoved(MouseEvent e) {
+        play.setMouseOver(false);
+        menu.setMouseOver(false);
 
-	private boolean isIn(UrmButton b, MouseEvent e) {
-		return b.getBounds().contains(e.getX(), e.getY());
-	}
+        if (isIn(menu, e))
+            menu.setMouseOver(true);
+        else if (isIn(play, e))
+            play.setMouseOver(true);
+    }
 
-	public void mouseMoved(MouseEvent e) {
-		play.setMouseOver(false);
-		menu.setMouseOver(false);
+    // Handle mouse release event
+    public void mouseReleased(MouseEvent e) {
+        if (isIn(menu, e)) {
+            if (menu.isMousePressed()) {
+                playing.resetAll();
+                playing.setGamestate(Gamestate.MENU);
+            }
+        } else if (isIn(play, e)) {
+            if (play.isMousePressed()) {
+                playing.resetAll();
+                playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
+            }
+        }
 
-		if (isIn(menu, e))
-			menu.setMouseOver(true);
-		else if (isIn(play, e))
-			play.setMouseOver(true);
-	}
+        menu.resetBools();
+        play.resetBools();
+    }
 
-	public void mouseReleased(MouseEvent e) {
-		if (isIn(menu, e)) {
-			if (menu.isMousePressed()) {
-				playing.resetAll();
-				playing.setGamestate(Gamestate.MENU);
-			}
-		} else if (isIn(play, e))
-			if (play.isMousePressed()) {
-				playing.resetAll();
-				playing.getGame().getAudioPlayer().setLevelSong(playing.getLevelManager().getLevelIndex());
-			}
-
-		menu.resetBools();
-		play.resetBools();
-	}
-
-	public void mousePressed(MouseEvent e) {
-		if (isIn(menu, e))
-			menu.setMousePressed(true);
-		else if (isIn(play, e))
-			play.setMousePressed(true);
-	}
-
+    // Handle mouse press event
+    public void mousePressed(MouseEvent e) {
+        if (isIn(menu, e))
+            menu.setMousePressed(true);
+        else if (isIn(play, e))
+            play.setMousePressed(true);
+    }
 }

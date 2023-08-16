@@ -3,10 +3,10 @@ package utilz;
 import main.Game;
 
 public class Constants {
-
+    // Constants related to physics and animation
 	public static final float GRAVITY = 0.04f * Game.SCALE;
 	public static final int ANI_SPEED = 25;
-
+// Constants for dialogue
 	public static class Dialogue {
 		public static final int QUESTION = 0;
 		public static final int EXCLAMATION = 1;
@@ -23,7 +23,7 @@ public class Constants {
 			return 0;
 		}
 	}
-
+// Constants related to projectiles
 	public static class Projectiles {
 		public static final int CANNON_BALL_DEFAULT_WIDTH = 15;
 		public static final int CANNON_BALL_DEFAULT_HEIGHT = 15;
@@ -32,7 +32,7 @@ public class Constants {
 		public static final int CANNON_BALL_HEIGHT = (int) (Game.SCALE * CANNON_BALL_DEFAULT_HEIGHT);
 		public static final float SPEED = 0.75f * Game.SCALE;
 	}
-
+// Constants for game objects
 	public static class ObjectConstants {
 
 		public static final int RED_POTION = 0;
@@ -46,7 +46,7 @@ public class Constants {
 		public static final int TREE_TWO = 8;
 		public static final int TREE_THREE = 9;
 
-		public static final int RED_POTION_VALUE = 15;
+		public static final int RED_POTION_VALUE = 50;
 		public static final int BLUE_POTION_VALUE = 10;
 
 		public static final int CONTAINER_WIDTH_DEFAULT = 40;
@@ -130,7 +130,7 @@ public class Constants {
 			return 0;
 		}
 	}
-
+// Constants for enemy
 	public static class EnemyConstants {
 		public static final int CRABBY = 0;
 		public static final int PINKSTAR = 1;
@@ -212,7 +212,7 @@ public class Constants {
 			}
 		}
 	}
-
+// Constants for environment
 	public static class Environment {
 		public static final int BIG_CLOUD_WIDTH_DEFAULT = 448;
 		public static final int BIG_CLOUD_HEIGHT_DEFAULT = 101;
@@ -224,7 +224,7 @@ public class Constants {
 		public static final int SMALL_CLOUD_WIDTH = (int) (SMALL_CLOUD_WIDTH_DEFAULT * Game.SCALE);
 		public static final int SMALL_CLOUD_HEIGHT = (int) (SMALL_CLOUD_HEIGHT_DEFAULT * Game.SCALE);
 	}
-
+// Constants for UI
 	public static class UI {
 		public static class Buttons {
 			public static final int B_WIDTH_DEFAULT = 140;
@@ -261,7 +261,7 @@ public class Constants {
 		public static final int RIGHT = 2;
 		public static final int DOWN = 3;
 	}
-
+// Constants for player
 	public static class PlayerConstants {
 		public static final int IDLE = 0;
 		public static final int RUNNING = 1;
