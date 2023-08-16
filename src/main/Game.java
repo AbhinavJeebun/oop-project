@@ -9,6 +9,7 @@ import gamestates.Menu;
 import gamestates.Playing;
 import ui.AudioOptions;
 
+// The main class that represents the game and manages its components and logic.
 public class Game implements Runnable {
 
 	private GamePanel gamePanel;
@@ -22,6 +23,7 @@ public class Game implements Runnable {
 	private AudioOptions audioOptions;
 	private AudioPlayer audioPlayer;
 
+	// Constants for game dimensions and scaling factors.
 	public final static int TILES_DEFAULT_SIZE = 32;
 	public final static float SCALE = 2.0f;
 	public final static int TILES_IN_WIDTH = 26;
@@ -32,6 +34,7 @@ public class Game implements Runnable {
 
 	private final boolean SHOW_FPS_UPS = true;
 
+	// Constructor for initializing the game components.
 	public Game() {
 		System.out.println("size: " + GAME_WIDTH + " : " + GAME_HEIGHT);
 		initClasses();
@@ -41,6 +44,7 @@ public class Game implements Runnable {
 		startGameLoop();
 	}
 
+	// Initialize various game classes.
 	private void initClasses() {
 		audioOptions = new AudioOptions(this);
 		audioPlayer = new AudioPlayer();
@@ -49,29 +53,33 @@ public class Game implements Runnable {
 		gameOptions = new GameOptions(this);
 	}
 
+	// Start the game loop in a new thread.
 	private void startGameLoop() {
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 
+	// Update the game state based on the current game state.
 	public void update() {
 		switch (Gamestate.state) {
-		case MENU -> menu.update();
-		case PLAYING -> playing.update();
-		case OPTIONS -> gameOptions.update();
-		case QUIT -> System.exit(0);
+			case MENU -> menu.update();
+			case PLAYING -> playing.update();
+			case OPTIONS -> gameOptions.update();
+			case QUIT -> System.exit(0);
 		}
 	}
 
+	// Render the game graphics based on the current game state.
 	@SuppressWarnings("incomplete-switch")
 	public void render(Graphics g) {
 		switch (Gamestate.state) {
-		case MENU -> menu.draw(g);
-		case PLAYING -> playing.draw(g);
-		case OPTIONS -> gameOptions.draw(g);
+			case MENU -> menu.draw(g);
+			case PLAYING -> playing.draw(g);
+			case OPTIONS -> gameOptions.draw(g);
 		}
 	}
 
+	// Run method for the game loop.
 	@Override
 	public void run() {
 		double timePerFrame = 1000000000.0 / FPS_SET;
@@ -123,11 +131,13 @@ public class Game implements Runnable {
 		}
 	}
 
+	// Reset player's direction when window focus is lost.
 	public void windowFocusLost() {
 		if (Gamestate.state == Gamestate.PLAYING)
 			playing.getPlayer().resetDirBooleans();
 	}
 
+	// Getters for various game components.
 	public Menu getMenu() {
 		return menu;
 	}
